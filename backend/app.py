@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from utils.anthropic_api import AnthropicAPI
+from backend.utils.anthropic_api import AnthropicAPI
 import os
 
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')

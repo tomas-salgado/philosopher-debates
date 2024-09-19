@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from utils.anthropic_api import AnthropicAPI
+import os
 
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
 api = AnthropicAPI()
@@ -39,4 +40,4 @@ def philosopher_dialogue():
     return jsonify({"response": response})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 8080)))

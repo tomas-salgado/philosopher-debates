@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 from backend.utils.anthropic_api import AnthropicAPI
 import os
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
 api = AnthropicAPI()
@@ -16,10 +19,13 @@ def start_conversation():
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
+    logging.debug("Received a request to /send_message")
     user_message = request.json.get('message')
     if not user_message:
+        logging.warning("No message provided in request")
         return jsonify({"error": "No message provided"}), 400
     api.send_user_message(user_message)
+    logging.info(f"Message received: {user_message}")
     return jsonify({"message": "Message received"})
 
 @app.route('/respond_to_user', methods=['POST'])

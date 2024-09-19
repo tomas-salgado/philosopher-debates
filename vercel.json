@@ -11,5 +11,11 @@
       "src": "/(.*)",
       "dest": "backend/app.py"
     }
+  ],
+  "functions": [
+    {
+      "src": "/(.*)",
+      "maxDuration": 60 
+    }
   ]
-}
+    }

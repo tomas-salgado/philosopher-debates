@@ -1,0 +1,118 @@
+#chat-container {
+    width: 1000px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+#chat-window {
+    height: 525px;
+    overflow-y: scroll;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+#user-input, button {
+    font-size: 16px;
+    line-height: 1.5;
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 49%;
+    padding: 12px 20px;
+    margin-right: 2%;
+    background-color: #a8b6bf; /* Subdued blue-gray */
+    color: #333; /* Dark gray for text */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #8c9ea9; /* Slightly darker shade for hover */
+}
+
+button.ask-socrates {
+    background-color: #b2d8d8; /* Soft teal, matching Socrates' message bubble */
+}
+
+button.ask-nietzsche {
+    background-color: #f4d8cd; /* Soft peach, matching Nietzsche's message bubble */
+}
+
+button.ask-socrates:hover {
+    background-color: #9ec2c0; /* Darker teal for hover */
+}
+
+button.ask-nietzsche:hover {
+    background-color: #e3bba9; /* Darker peach for hover */
+}
+
+.message {
+    padding: 10px 20px;
+    margin: 8px 0;
+    border-radius: 18px; /* Rounded corners for bubble effect */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+    color: #333;
+    max-width: 80%; /* Ensures the bubble doesn't stretch too wide */
+    word-wrap: break-word; /* Ensures text breaks to next line if too long */
+}
+
+.user-message {
+    background-color: #d9ead3; /* Soft green */
+    align-self: flex-end;
+    margin-left: 20%; /* Pushes the bubble to the right */
+}
+
+.philosopher-message {
+    padding: 10px 20px;
+    margin: 8px 0;
+    border-radius: 18px; /* Rounded corners for bubble effect */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+    color: #333;
+    max-width: 80%; /* Ensures the bubble doesn't stretch too wide */
+    word-wrap: break-word; /* Ensures text breaks to next line if too long */
+    align-self: flex-start;
+    margin-right: 20%; /* Pushes the bubble to the left */
+    text-align: left;
+    font-weight: 500; /* Slightly bolder text */
+    position: relative; /* Needed for pseudo-elements */
+}
+
+.philosopher-message.socrates {
+    background-color: #b2d8d8; /* Soft teal */
+}
+
+.philosopher-message.nietzsche {
+    background-color: #f4d8cd; /* Soft peach */
+}
+
+.philosopher-image {
+    width: 60px; /* Adjust size as needed */
+    height: 60px; /* Adjust size as needed */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 10px; /* Space between the image and the text */
+    vertical-align: middle; /* Aligns the image with the text */
+}
+
+#button-container { /* Assuming there's a div around buttons, if not, add one */
+    display: flex;
+    width: 100%; /* Ensure the container takes full width */
+    justify-content: space-between; /* Space out the buttons */
+}
+
+#button-container button {
+    flex-grow: 1; /* Grow to fill the space */
+    margin: 0 10px; /* Space between buttons */
+}

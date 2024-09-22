@@ -27,21 +27,19 @@ class AnthropicAPI:
             message = "We're going to have a philosophical debate between AI philosophers. " + message
         self.conversation_history.append({"role": "user", "content": message})
 
-    def get_philosopher_B_response_to_philosopher_A(self, philosopher_A, philosopher_B):
+    def get_response_to_philosopher(self, philosopher):
         """
-        Generates a response from philosopher B to philosopher A's message
-        and appends it to the conversation history.
+        Generates a response from the philosopher based on the conversation history.
 
         Args:
-            philosopher_A (str): The name of philosopher A.
-            philosopher_B (str): The name of philosopher B.
+            philosopher (str): The name of the philosopher.
 
         Returns:
-            str: The response from philosopher B.
+            str: The response from the philosopher.
         """
-        message = f"Continue the debate with {philosopher_B}'s response to {philosopher_A}'s message."
+        message = f"Continue the debate by responding to the previous message(s)."
         self.conversation_history.append({"role": "user", "content": message})
-        return self.get_philosopher_response(philosopher_B)
+        return self.get_philosopher_response(philosopher)
 
     def get_philosopher_response(self, philosopher):
         """

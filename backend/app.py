@@ -20,13 +20,17 @@ def start_conversation():
 @app.route('/send_message', methods=['POST'])
 def send_message():
     logging.debug("Received a request to /send_message")
+    philosopher = request.json.get('philosopher')
+    if not philosopher:
+        return jsonify({"error": "Philosopher not specified"}), 400
     user_message = request.json.get('message')
-    if not user_message:
-        logging.warning("No message provided in request")
-        return jsonify({"error": "No message provided"}), 400
-    api.send_user_message(user_message)
-    logging.info(f"Message received: {user_message}")
-    return jsonify({"message": "Message received"})
+    if user_message:
+        api.send_user_message(user_message)
+        response = api.get_philosopher_response(philosopher)
+        return jsonify({"response": response})
+    elif not user_message:
+        response = api.get_response_to_philosopher(philosopher)
+        return jsonify({"response": response})
 
 @app.route('/respond_to_user', methods=['POST'])
 def respond_to_user():
@@ -36,14 +40,6 @@ def respond_to_user():
     response = api.get_philosopher_response(philosopher)
     return jsonify({"response": response})
 
-@app.route('/philosopher_dialogue', methods=['POST'])
-def philosopher_dialogue():
-    philosopher_1 = request.json.get('philosopher_1')
-    philosopher_2 = request.json.get('philosopher_2')
-    if not philosopher_1 or not philosopher_2:
-        return jsonify({"error": "Missing philosopher names"}), 400
-    response = api.get_philosopher_B_response_to_philosopher_A(philosopher_1, philosopher_2)
-    return jsonify({"response": response})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 8080)))

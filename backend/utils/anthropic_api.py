@@ -29,17 +29,17 @@ class AnthropicAPI:
 
     def get_response_to_philosopher(self, philosopher):
         """
-        Generates a response from the philosopher based on the conversation history.
+        Generates a streaming response from the philosopher based on the conversation history.
 
         Args:
             philosopher (str): The name of the philosopher.
 
-        Returns:
-            str: The response from the philosopher.
+        Yields:
+            str: Chunks of the response from the philosopher.
         """
         message = f"Continue the debate by responding to the previous message(s)."
         self.conversation_history.append({"role": "user", "content": message})
-        return self.get_philosopher_response(philosopher)
+        yield from self.get_philosopher_response(philosopher)
 
     def get_philosopher_response(self, philosopher):
         """
@@ -49,13 +49,15 @@ class AnthropicAPI:
         Args:
             philosopher (str): The name of the philosopher.
 
-        Returns:
-            str: The response from the philosopher.
+        Yields:
+            str: Chunks of the response from the philosopher.
         """
         system_prompt = self.get_philosopher_prompt(philosopher)
-        philosopher_response = self.call_api(system_prompt)
-        self.conversation_history.append({"role": "assistant", "content": philosopher_response})
-        return philosopher_response
+        full_response = ""
+        for chunk in self.call_api(system_prompt):
+            full_response += chunk
+            yield chunk
+        self.conversation_history.append({"role": "assistant", "content": full_response})
 
     def get_philosopher_prompt(self, philosopher):
         """
@@ -67,7 +69,7 @@ class AnthropicAPI:
         Returns:
             str: The system prompt for the philosopher.
         """
-        philosopher = philosopher.lower()  # Convert philosopher name to lowercase
+        philosopher = philosopher.lower() 
         prompt_file = f"prompts/{philosopher}.txt"
         try:
             with open(prompt_file, 'r') as file:
@@ -86,7 +88,6 @@ class AnthropicAPI:
         Returns:
             str: The full response from the API.
         """
-        full_response = ""
         with self.client.messages.stream(
             model="claude-3-sonnet-20240229",
             max_tokens=4000,
@@ -95,5 +96,4 @@ class AnthropicAPI:
             messages=self.conversation_history
         ) as stream:
             for text in stream.text_stream:
-                full_response += text
-        return full_response
+                yield text

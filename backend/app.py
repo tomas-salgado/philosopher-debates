@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, Response, stream_with_context
 from backend.utils.anthropic_api import AnthropicAPI
 import os
 import logging
@@ -24,13 +24,17 @@ def send_message():
     if not philosopher:
         return jsonify({"error": "Philosopher not specified"}), 400
     user_message = request.json.get('message')
-    if user_message:
-        api.send_user_message(user_message)
-        response = api.get_philosopher_response(philosopher)
-        return jsonify({"response": response})
-    elif not user_message:
-        response = api.get_response_to_philosopher(philosopher)
-        return jsonify({"response": response})
+
+    def generate():
+        if user_message:
+            api.send_user_message(user_message)
+            for chunk in api.get_philosopher_response(philosopher):
+                yield f"data: {chunk}\n\n"
+        else:
+            for chunk in api.get_response_to_philosopher(philosopher):
+                yield f"data: {chunk}\n\n"
+
+    return Response(stream_with_context(generate()), content_type='text/event-stream')
 
 @app.route('/respond_to_user', methods=['POST'])
 def respond_to_user():

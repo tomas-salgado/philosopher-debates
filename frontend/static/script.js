@@ -34,6 +34,7 @@ function sendMessage(philosopher) {
                     return;
                 }
                 const chunk = decoder.decode(value);
+                console.log('Received chunk:', chunk);  // Log each chunk
                 const lines = chunk.split('\n');
                 lines.forEach(line => {
                     if (line.startsWith('data: ')) {

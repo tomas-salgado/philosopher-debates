@@ -36,7 +36,9 @@ def send_message():
             for chunk in api.get_response_to_philosopher(philosopher):
                 yield f"data: {chunk}\n\n"
 
-    return Response(stream_with_context(generate()), content_type='text/event-stream')
+    response = Response(stream_with_context(generate()), content_type='text/event-stream')
+    response.headers['X-Accel-Buffering'] = 'no'  # Disable Nginx buffering
+    return response
 
 @app.route('/respond_to_user', methods=['POST'])
 def respond_to_user():

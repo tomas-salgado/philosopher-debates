@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template, Response, stream_with_context
+from flask_cors import CORS
 from backend.utils.anthropic_api import AnthropicAPI
 import os
 import logging
@@ -6,6 +7,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
+CORS(app) 
 api = AnthropicAPI()
 
 @app.route('/')

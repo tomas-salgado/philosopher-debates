@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "functions": {
-    "backend/app.py": {
-      "runtime": "@vercel/python",
-      "maxDuration": 60
+  "builds": [
+    {
+      "src": "backend/app.py",
+      "use": "@vercel/python"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",

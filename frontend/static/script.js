@@ -30,11 +30,9 @@ function sendMessage(philosopher) {
         function readStream() {
             reader.read().then(({ done, value }) => {
                 if (done) {
-                    console.log('Stream complete');
                     return;
                 }
                 const chunk = decoder.decode(value);
-                console.log('Received chunk:', chunk);  // Log each chunk
                 const lines = chunk.split('\n');
                 lines.forEach(line => {
                     if (line.startsWith('data: ')) {

@@ -35,8 +35,6 @@ def send_message():
         else:
             for chunk in api.get_response_to_philosopher(philosopher):
                 yield f"data: {chunk}\n\n"
-        yield "data: [DONE]\n\n"
-
     return Response(generate(), mimetype='text/event-stream')
 
 @app.route('/respond_to_user', methods=['POST'])

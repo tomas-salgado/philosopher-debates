@@ -1,4 +1,4 @@
-function sendMessage(philosopher) {
+async function sendMessage(philosopher) {
     const userInput = document.getElementById('user-input').value;
     const chatWindow = document.getElementById('chat-window');
 
@@ -14,43 +14,44 @@ function sendMessage(philosopher) {
     philosopherMessageElement.innerHTML = `<img src="${imageUrl}" alt="${philosopher}" class="philosopher-image">${philosopher}: `;
     chatWindow.appendChild(philosopherMessageElement);
 
-    fetch('/send_message', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            philosopher: philosopher,
-            message: userInput
-        })
-    }).then(response => {
+    try {
+        const response = await fetch('/send_message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                philosopher: philosopher,
+                message: userInput
+            })
+        });
+
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
 
-        function readStream() {
-            reader.read().then(({ done, value }) => {
-                if (done) {
-                    console.log('Stream complete');
-                    return;
-                }
-                const chunk = decoder.decode(value);
-                console.log('Received chunk:', chunk);  // Log each chunk
-                const lines = chunk.split('\n');
-                lines.forEach(line => {
-                    if (line.startsWith('data: ')) {
-                        const data = line.slice(6);
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value);
+            const lines = chunk.split('\n');
+            for (const line of lines) {
+                if (line.startsWith('data: ')) {
+                    const data = line.slice(6);
+                    if (data === '[DONE]') {
+                        console.log('Stream complete');
+                    } else {
                         philosopherMessageElement.innerHTML += data;
                         chatWindow.scrollTop = chatWindow.scrollHeight;
                     }
-                });
-                readStream();
-            });
+                }
+            }
         }
-
-        readStream();
-    }).catch(error => {
+    } catch (error) {
         console.error('Fetch failed:', error);
-    });
+    }
 
     document.getElementById('user-input').value = '';
 }
+
+// Make sendMessage available globally
+window.sendMessage = sendMessage;

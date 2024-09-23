@@ -9,6 +9,7 @@ distro==1.9.0
 exceptiongroup==1.2.2
 filelock==3.16.1
 Flask==3.0.3
+Flask-Cors==5.0.0
 fsspec==2024.9.0
 h11==0.14.0
 httpcore==1.0.5
@@ -32,4 +33,3 @@ typing_extensions==4.12.2
 urllib3==2.2.3
 Werkzeug==3.0.4
 zipp==3.20.2
-flask-cors==3.0.10

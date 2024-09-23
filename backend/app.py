@@ -35,10 +35,9 @@ def send_message():
         else:
             for chunk in api.get_response_to_philosopher(philosopher):
                 yield f"data: {chunk}\n\n"
+        yield "data: [DONE]\n\n"
 
-    response = Response(stream_with_context(generate()), content_type='text/event-stream')
-    response.headers['X-Accel-Buffering'] = 'no'  # Disable Nginx buffering
-    return response
+    return Response(generate(), mimetype='text/event-stream')
 
 @app.route('/respond_to_user', methods=['POST'])
 def respond_to_user():

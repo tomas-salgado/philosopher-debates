@@ -12,6 +12,7 @@ api = AnthropicAPI()
 
 @app.route('/')
 def index():
+    api.start_conversation()
     return render_template('index.html')
 
 @app.route('/start', methods=['POST'])

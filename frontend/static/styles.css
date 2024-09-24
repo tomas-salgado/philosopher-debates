@@ -1,5 +1,5 @@
 #chat-container {
-    width: 1000px;
+    width: 90%;
     margin: auto;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -29,7 +29,7 @@
 
 button {
     width: 49%;
-    padding: 12px 20px;
+    padding: 10px 15px;
     margin-right: 2%;
     background-color: #a8b6bf; /* Subdued blue-gray */
     color: #333; /* Dark gray for text */

@@ -77,13 +77,17 @@ button.ask-nietzsche:hover {
 
 .philosopher-message {
     padding: 10px 20px;
-    border-radius: 18px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-width: 80%;
-    word-wrap: break-word;
+    margin: 8px 0;
+    border-radius: 18px; /* Rounded corners for bubble effect */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+    color: #333;
+    max-width: 80%; /* Ensures the bubble doesn't stretch too wide */
+    word-wrap: break-word; /* Ensures text breaks to next line if too long */
+    align-self: flex-start;
+    margin-right: 20%; /* Pushes the bubble to the left */
     text-align: left;
-    font-weight: 500;
-    background-color: #f4d8cd; /* Example color, adjust based on philosopher */
+    font-weight: 500; /* Slightly bolder text */
+    position: relative; /* Needed for pseudo-elements */
 }
 
 .philosopher-message.socrates {
@@ -95,10 +99,11 @@ button.ask-nietzsche:hover {
 }
 
 .philosopher-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: 10px; /* Space between image and bubble */
+    width: 60px; /* Adjust size as needed */
+    height: 60px; /* Adjust size as needed */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 10px; /* Space between the image and the text */
+    vertical-align: middle; /* Aligns the image with the text */
 }
 
 #button-container { /* Assuming there's a div around buttons, if not, add one */
@@ -110,10 +115,4 @@ button.ask-nietzsche:hover {
 #button-container button {
     flex-grow: 1; /* Grow to fill the space */
     margin: 0 10px; /* Space between buttons */
-}
-
-.message-container {
-    display: flex;
-    align-items: center; /* Aligns the image and the bubble vertically */
-    margin: 8px 0;
 }

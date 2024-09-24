@@ -9,28 +9,10 @@ function sendMessage(philosopher) {
     const formattedPhilosopherName = philosopher.toLowerCase().replace(/ /g, '-');
     const className = `philosopher-message ${formattedPhilosopherName}`;
     const imageUrl = `../static/img/${formattedPhilosopherName}.jpg`;
-
-    // Create the outer container
-    const philosopherMessageContainer = document.createElement('div');
-    philosopherMessageContainer.className = 'message-container';
-
-    // Create the image element
-    const imageElement = document.createElement('img');
-    imageElement.src = imageUrl;
-    imageElement.alt = philosopher;
-    imageElement.className = 'philosopher-image';
-
-    // Create the message bubble
-    const messageBubble = document.createElement('div');
-    messageBubble.className = className;
-    messageBubble.textContent = `${philosopher}: `; // Add the philosopher's name and the colon
-
-    // Append the image and the message bubble to the container
-    philosopherMessageContainer.appendChild(imageElement);
-    philosopherMessageContainer.appendChild(messageBubble);
-
-    // Append the container to the chat window
-    chatWindow.appendChild(philosopherMessageContainer);
+    const philosopherMessageElement = document.createElement('div');
+    philosopherMessageElement.className = className;
+    philosopherMessageElement.innerHTML = `<img src="${imageUrl}" alt="${philosopher}" class="philosopher-image">${philosopher}: `;
+    chatWindow.appendChild(philosopherMessageElement);
 
     fetch('/send_message', {
         method: 'POST',
@@ -55,7 +37,7 @@ function sendMessage(philosopher) {
                 lines.forEach(line => {
                     if (line.startsWith('data: ')) {
                         const data = line.slice(6);
-                        philosopherMessageContainer.innerHTML += data;
+                        philosopherMessageElement.innerHTML += data;
                         chatWindow.scrollTop = chatWindow.scrollHeight;
                     }
                 });

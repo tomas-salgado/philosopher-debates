@@ -154,18 +154,18 @@ button.ask-nietzsche:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: auto; /* Increased width for a bigger button */
-    padding: 20px 40px; /* Increased padding for a bigger button */
-    background-color: #89bcf3; /* Changed background color to blue */
+    width: auto;
+    padding: 20px 40px;
+    background-color: #89bcf3;
     transition: all 0.3s ease;
     margin: 0;
     z-index: 1;
     display: block;
-    font-size: 18px; /* Increased font size for a bigger button */
+    font-size: 18px;
 }
 
 #generate-topic:hover {
-    background-color: #4077b1; /* Changed hover background color to a darker blue */
+    background-color: #4077b1;
     transform: translate(-50%, -50%) scale(1.05);
 }
 

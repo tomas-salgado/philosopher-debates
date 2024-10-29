@@ -88,6 +88,9 @@ class AnthropicAPI:
         Returns:
             str: The full response from the API.
         """
+        buffer = ""
+        in_stage_direction = False
+        
         with self.client.messages.stream(
             model="claude-3-sonnet-20240229",
             max_tokens=4000,
@@ -96,9 +99,29 @@ class AnthropicAPI:
             messages=self.conversation_history
         ) as stream:
             for text in stream.text_stream:
-                # Remove any text between asterisks
-                cleaned_text = text.replace(r'\*.*?\*', '')
-                yield cleaned_text
+                # need to handle removal of stage directions
+                # TODO: handle this with prompt engineering rather than here
+                buffer += text
+                while '*' in buffer:
+                    if not in_stage_direction:
+                        start_idx = buffer.find('*')
+                        if start_idx >= 0:
+                            # Found opening asterisk
+                            yield buffer[:start_idx]
+                            buffer = buffer[start_idx + 1:]
+                            in_stage_direction = True
+                    else:
+                        end_idx = buffer.find('*')
+                        if end_idx >= 0:
+                            # Found closing asterisk
+                            buffer = buffer[end_idx + 1:]
+                            in_stage_direction = False
+                        else:
+                            break
+                
+                if not in_stage_direction and buffer:
+                    yield buffer
+                    buffer = ""
 
     def generate_debate_topic(self):
         """

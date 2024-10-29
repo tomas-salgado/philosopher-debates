@@ -95,9 +95,23 @@ function sendMessage(philosopher) {
     });
 
     document.getElementById('user-input').value = '';
+    updatePlaceholder();
 }
 
 function setQuestion(question) {
     const userInput = document.getElementById('user-input');
     userInput.value = question;
 }
+
+function updatePlaceholder() {
+    const messagesContainer = document.getElementById('messages-container');
+    const userInput = document.getElementById('user-input');
+    
+    if (messagesContainer.children.length === 0) {
+        userInput.placeholder = "Ask a philosophical question...";
+    } else {
+        userInput.placeholder = "Continue the conversation or choose a philosopher...";
+    }
+}
+
+document.addEventListener('DOMContentLoaded', updatePlaceholder);

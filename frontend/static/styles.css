@@ -40,26 +40,40 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-button:hover {
-    background-color: #8c9ea9;
-}
-
-button.ask-socrates {
+button.socrates-respond {
     background-color: #b2d8d8;
+    transition: all 0.3s ease;
 }
 
-button.ask-nietzsche {
+button.socrates-respond:hover {
+    background-color: #8fc7c7;
+    transform: scale(1.04);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button.nietzsche-respond {
     background-color: #f4d8cd;
+    transition: all 0.3s ease;
 }
 
-button.ask-socrates:hover {
-    background-color: #9ec2c0;
+button.nietzsche-respond:hover {
+    background-color: #edc3b4;
+    transform: scale(1.04);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-button.ask-nietzsche:hover {
-    background-color: #e3bba9;
+button.aurelius-respond {
+    background-color: #ccf4bd;
+    transition: all 0.3s ease;
+}
+
+button.aurelius-respond:hover {
+    background-color: #b8e6a7;
+    transform: scale(1.04);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .message {
@@ -177,7 +191,6 @@ button.ask-nietzsche:hover {
     transform: scale(1.02);
 }
 
-/* Hide preset questions when there are messages */
 #chat-window #messages-container:not(:empty) ~ #preset-questions {
     display: none;
 }

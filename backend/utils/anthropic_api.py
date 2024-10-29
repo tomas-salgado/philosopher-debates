@@ -97,3 +97,30 @@ class AnthropicAPI:
         ) as stream:
             for text in stream.text_stream:
                 yield text
+
+    def generate_debate_topic(self):
+        """
+        Generates a philosophical debate topic using the AI model.
+        
+        Returns:
+            str: A philosophical question or topic for debate.
+        """
+        system_prompt = """Generate an interesting philosophical debate topic or question. 
+        The topic should be thought-provoking and suitable for a discussion between different philosophical perspectives.
+        Respond with only the topic/question itself, without any additional commentary.
+        Make it concise (1-2 sentences) and focused on fundamental philosophical concepts."""
+
+        messages = [{"role": "user", "content": "Generate a philosophical debate topic."}]
+        
+        topic = ""
+        with self.client.messages.stream(
+            model="claude-3-sonnet-20240229",
+            max_tokens=100,
+            temperature=0.8,
+            system=system_prompt,
+            messages=messages
+        ) as stream:
+            for text in stream.text_stream:
+                topic += text
+        
+        return topic.strip()

@@ -11,10 +11,13 @@
 }
 
 #chat-window {
+    position: relative;
     height: 525px;
     overflow-y: scroll;
     margin-bottom: 10px;
     padding: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 #user-input, button {
@@ -145,4 +148,28 @@ button.ask-nietzsche:hover {
     0% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
+}
+#generate-topic {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto; /* Increased width for a bigger button */
+    padding: 20px 40px; /* Increased padding for a bigger button */
+    background-color: #89bcf3; /* Changed background color to blue */
+    transition: all 0.3s ease;
+    margin: 0;
+    z-index: 1;
+    display: block;
+    font-size: 18px; /* Increased font size for a bigger button */
+}
+
+#generate-topic:hover {
+    background-color: #4077b1; /* Changed hover background color to a darker blue */
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Hide generate topic button when there are messages */
+#chat-window .message ~ #generate-topic {
+    display: none;
 }

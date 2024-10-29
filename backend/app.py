@@ -46,6 +46,14 @@ def respond_to_user():
     response = api.get_philosopher_response(philosopher)
     return jsonify({"response": response})
 
+@app.route('/generate_topic', methods=['GET'])
+def generate_topic():
+    try:
+        topic = api.generate_debate_topic()
+        return jsonify({"topic": topic})
+    except Exception as e:
+        logging.error(f"Error generating topic: {str(e)}")
+        return jsonify({"error": "Failed to generate topic"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=int(os.getenv('PORT', 8080)))

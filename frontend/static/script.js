@@ -6,6 +6,11 @@ function createLoadingIndicator() {
 }
 
 function sendMessage(philosopher) {
+    const generateTopicBtn = document.getElementById('generate-topic');
+    if (generateTopicBtn) {
+        generateTopicBtn.style.display = 'none';
+    }
+    
     const userInput = document.getElementById('user-input').value;
     const chatWindow = document.getElementById('chat-window');
 
@@ -75,4 +80,28 @@ function sendMessage(philosopher) {
     });
 
     document.getElementById('user-input').value = '';
+}
+
+function generateTopic() {
+    const userInput = document.getElementById('user-input');
+    const loadingIndicator = createLoadingIndicator();
+    const generateTopicBtn = document.getElementById('generate-topic');
+    
+    generateTopicBtn.disabled = true;
+    generateTopicBtn.appendChild(loadingIndicator);
+
+    fetch('/generate_topic', {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        userInput.value = data.topic;
+        loadingIndicator.remove();
+        generateTopicBtn.disabled = false;
+    })
+    .catch(error => {
+        console.error('Failed to generate topic:', error);
+        loadingIndicator.remove();
+        generateTopicBtn.disabled = false;
+    });
 }

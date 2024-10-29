@@ -31,8 +31,8 @@ button {
     width: 49%;
     padding: 10px 15px;
     margin-right: 2%;
-    background-color: #a8b6bf; /* Subdued blue-gray */
-    color: #333; /* Dark gray for text */
+    background-color: #a8b6bf;
+    color: #333;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -40,79 +40,109 @@ button {
 }
 
 button:hover {
-    background-color: #8c9ea9; /* Slightly darker shade for hover */
+    background-color: #8c9ea9;
 }
 
 button.ask-socrates {
-    background-color: #b2d8d8; /* Soft teal, matching Socrates' message bubble */
+    background-color: #b2d8d8;
 }
 
 button.ask-nietzsche {
-    background-color: #f4d8cd; /* Soft peach, matching Nietzsche's message bubble */
+    background-color: #f4d8cd;
 }
 
 button.ask-socrates:hover {
-    background-color: #9ec2c0; /* Darker teal for hover */
+    background-color: #9ec2c0;
 }
 
 button.ask-nietzsche:hover {
-    background-color: #e3bba9; /* Darker peach for hover */
+    background-color: #e3bba9;
 }
 
 .message {
     padding: 10px 20px;
     margin: 8px 0;
-    border-radius: 18px; /* Rounded corners for bubble effect */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+    border-radius: 18px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     color: #333;
-    max-width: 80%; /* Ensures the bubble doesn't stretch too wide */
-    word-wrap: break-word; /* Ensures text breaks to next line if too long */
+    max-width: 80%;
+    word-wrap: break-word;
 }
 
 .user-message {
-    background-color: #d9ead3; /* Soft green */
+    background-color: #d9ead3;
     align-self: flex-end;
-    margin-left: 20%; /* Pushes the bubble to the right */
+    margin-left: 20%;
 }
 
 .philosopher-message {
     padding: 10px 20px;
     margin: 8px 0;
-    border-radius: 18px; /* Rounded corners for bubble effect */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for 3D effect */
+    border-radius: 18px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     color: #333;
-    max-width: 80%; /* Ensures the bubble doesn't stretch too wide */
-    word-wrap: break-word; /* Ensures text breaks to next line if too long */
+    max-width: 80%;
+    word-wrap: break-word;
     align-self: flex-start;
-    margin-right: 20%; /* Pushes the bubble to the left */
+    margin-right: 20%;
     text-align: left;
-    font-weight: 500; /* Slightly bolder text */
-    position: relative; /* Needed for pseudo-elements */
+    font-weight: 500;
+    position: relative;
 }
 
 .philosopher-message.socrates {
-    background-color: #b2d8d8; /* Soft teal */
+    background-color: #b2d8d8;
 }
 
 .philosopher-message.nietzsche {
-    background-color: #f4d8cd; /* Soft peach */
+    background-color: #f4d8cd;
 }
 
 .philosopher-image {
-    width: 60px; /* Adjust size as needed */
-    height: 60px; /* Adjust size as needed */
-    border-radius: 50%; /* Makes the image circular */
-    margin-right: 10px; /* Space between the image and the text */
-    vertical-align: middle; /* Aligns the image with the text */
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
-#button-container { /* Assuming there's a div around buttons, if not, add one */
+#button-container {
     display: flex;
-    width: 100%; /* Ensure the container takes full width */
-    justify-content: space-between; /* Space out the buttons */
+    width: 100%;
+    justify-content: space-between;
 }
 
 #button-container button {
-    flex-grow: 1; /* Grow to fill the space */
-    margin: 0 10px; /* Space between buttons */
+    flex-grow: 1;
+    margin: 0 10px; 
+}
+
+.loading-indicator {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.loading-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #666;
+    border-radius: 50%;
+    margin: 0 2px;
+    opacity: 0;
+    animation: loading 1.4s infinite;
+}
+
+.loading-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loading {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
 }

@@ -12,10 +12,16 @@ function sendMessage(philosopher) {
     }
     
     const userInput = document.getElementById('user-input').value;
-    const chatWindow = document.getElementById('chat-window');
+    const messagesContainer = document.getElementById('messages-container');
+    const presetQuestions = document.getElementById('preset-questions');
+    
+    // Hide preset questions when first message is sent
+    if (presetQuestions) {
+        presetQuestions.style.display = 'none';
+    }
 
     if (userInput.trim() !== '') {
-        chatWindow.innerHTML += `<div class="message user-message">You: ${userInput}</div>`;
+        messagesContainer.innerHTML += `<div class="message user-message">You: ${userInput}</div>`;
     }
 
     const formattedPhilosopherName = philosopher.toLowerCase().replace(/ /g, '-');
@@ -27,7 +33,7 @@ function sendMessage(philosopher) {
     
     const loadingIndicator = createLoadingIndicator();
     philosopherMessageElement.appendChild(loadingIndicator);
-    chatWindow.appendChild(philosopherMessageElement);
+    messagesContainer.appendChild(philosopherMessageElement);
 
     fetch('/send_message', {
         method: 'POST',
@@ -62,7 +68,7 @@ function sendMessage(philosopher) {
                         }
                         const data = line.slice(6);
                         philosopherMessageElement.innerHTML += data;
-                        chatWindow.scrollTop = chatWindow.scrollHeight;
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     }
                 });
                 readStream();
@@ -82,26 +88,7 @@ function sendMessage(philosopher) {
     document.getElementById('user-input').value = '';
 }
 
-function generateTopic() {
+function setQuestion(question) {
     const userInput = document.getElementById('user-input');
-    const loadingIndicator = createLoadingIndicator();
-    const generateTopicBtn = document.getElementById('generate-topic');
-    
-    generateTopicBtn.disabled = true;
-    generateTopicBtn.appendChild(loadingIndicator);
-
-    fetch('/generate_topic', {
-        method: 'GET',
-    })
-    .then(response => response.json())
-    .then(data => {
-        userInput.value = data.topic;
-        loadingIndicator.remove();
-        generateTopicBtn.disabled = false;
-    })
-    .catch(error => {
-        console.error('Failed to generate topic:', error);
-        loadingIndicator.remove();
-        generateTopicBtn.disabled = false;
-    });
+    userInput.value = question;
 }

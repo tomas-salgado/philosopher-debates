@@ -10,7 +10,13 @@
 <body>
     <div id="chat-container">
         <div id="chat-window">
-            <button id="generate-topic" onclick="generateTopic()">Generate a Philosophical Topic</button>
+            <div id="preset-questions">
+                <button class="preset-question" onclick="setQuestion('What is justice?')">What is justice?</button>
+                <button class="preset-question" onclick="setQuestion('Do we have free will?')">Do we have free will?</button>
+                <button class="preset-question" onclick="setQuestion('What is the meaning of life?')">What is the meaning of life?</button>
+                <button class="preset-question" onclick="setQuestion('Are humans naturally good or evil?')">Are humans naturally good or evil?</button>
+            </div>
+            <div id="messages-container"></div>
         </div>
         <input type="text" id="user-input" placeholder="Ask a philosophical question...">
         <div id="button-container">

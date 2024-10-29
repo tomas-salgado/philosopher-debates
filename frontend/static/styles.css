@@ -149,27 +149,35 @@ button.ask-nietzsche:hover {
     50% { opacity: 1; }
     100% { opacity: 0; }
 }
-#generate-topic {
+
+#preset-questions {
     position: absolute;
-    top: 50%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: auto;
-    padding: 20px 40px;
-    background-color: #89bcf3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 80%;
+    z-index: 1;
+}
+
+.preset-question {
+    width: calc(50% - 10px);
+    padding: 15px 20px;
+    background-color: #e0e0e0;
     transition: all 0.3s ease;
     margin: 0;
-    z-index: 1;
-    display: block;
-    font-size: 18px;
+    font-size: 16px;
 }
 
-#generate-topic:hover {
-    background-color: #4077b1;
-    transform: translate(-50%, -50%) scale(1.05);
+.preset-question:hover {
+    background-color: #c0c0c0;
+    transform: scale(1.02);
 }
 
-/* Hide generate topic button when there are messages */
-#chat-window .message ~ #generate-topic {
+/* Hide preset questions when there are messages */
+#chat-window #messages-container:not(:empty) ~ #preset-questions {
     display: none;
 }

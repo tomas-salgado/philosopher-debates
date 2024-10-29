@@ -96,7 +96,9 @@ class AnthropicAPI:
             messages=self.conversation_history
         ) as stream:
             for text in stream.text_stream:
-                yield text
+                # Remove any text between asterisks
+                cleaned_text = text.replace(r'\*.*?\*', '')
+                yield cleaned_text
 
     def generate_debate_topic(self):
         """

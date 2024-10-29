@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, Response, stream_with_context
 from flask_cors import CORS
 from backend.utils.anthropic_api import AnthropicAPI
+from backend.utils.rate_limiter import RateLimiter
 import os
 import logging
 
@@ -9,6 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__, template_folder='../frontend/templates', static_folder='../frontend/static')
 CORS(app) 
 api = AnthropicAPI()
+rate_limiter = RateLimiter(max_requests=120, window_minutes=60)
 
 @app.route('/')
 def index():
@@ -22,6 +24,13 @@ def start_conversation():
 
 @app.route('/send_message', methods=['POST'])
 def send_message():
+    ip_address = request.remote_addr
+    
+    if not rate_limiter.is_allowed(ip_address):
+        return jsonify({
+            "error": "Rate limit exceeded. Please try again later."
+        }), 429
+        
     logging.debug("Received a request to /send_message")
     philosopher = request.json.get('philosopher')
     if not philosopher:

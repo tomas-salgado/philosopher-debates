@@ -45,6 +45,13 @@ function sendMessage(philosopher) {
             message: userInput
         })
     }).then(response => {
+        if (response.status === 429) {
+            messagesContainer.removeChild(philosopherMessageElement);
+            alert('You have reached the maximum number of messages for now. Please come back later to continue your philosophical journey!');
+            throw new Error('Rate limit exceeded');
+        }
+        return response;
+    }).then(response => {
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
 
@@ -77,12 +84,14 @@ function sendMessage(philosopher) {
 
         readStream();
     }).catch(error => {
-        console.error('Fetch failed:', error);
-        const loadingIndicator = philosopherMessageElement.querySelector('.loading-indicator');
-        if (loadingIndicator) {
-            loadingIndicator.remove();
+        if (!error.message.includes('Rate limit')) {
+            console.error('Fetch failed:', error);
+            const loadingIndicator = philosopherMessageElement.querySelector('.loading-indicator');
+            if (loadingIndicator) {
+                loadingIndicator.remove();
+            }
+            philosopherMessageElement.innerHTML += ` Error: ${error.message || 'Failed to get response'}`;
         }
-        philosopherMessageElement.innerHTML += ' Error: Failed to get response';
     });
 
     document.getElementById('user-input').value = '';

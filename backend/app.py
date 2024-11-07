@@ -37,14 +37,22 @@ def send_message():
         return jsonify({"error": "Philosopher not specified"}), 400
     user_message = request.json.get('message')
 
+    logging.info(f"User asked: {user_message}")
+    logging.info(f"Philosopher selected: {philosopher}")
+
     def generate():
+        full_response = ""
         if user_message:
             api.send_user_message(user_message)
             for chunk in api.get_philosopher_response(philosopher):
+                full_response += chunk
                 yield f"data: {chunk}\n\n"
         else:
             for chunk in api.get_response_to_philosopher(philosopher):
+                full_response += chunk
                 yield f"data: {chunk}\n\n"
+        logging.info(f"Response from {philosopher}: {full_response}")
+
     return Response(generate(), mimetype='text/event-stream')
 
 @app.route('/respond_to_user', methods=['POST'])
